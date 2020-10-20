@@ -1,9 +1,7 @@
 package io.wisoft.daewon.member
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/members")
@@ -20,5 +18,12 @@ class MemberController(private val memberService: MemberService) {
   @GetMapping("/{email}")
   fun findByEmail(@PathVariable email: String): Member? =
     memberService.findByEmail(email)
+
+  @RequestMapping(value = ["{id}"], method = [RequestMethod.PUT])
+  @ResponseStatus(HttpStatus.OK)
+  fun updateMemberPoint(@RequestBody member: Member, @PathVariable id: Long): Long? {
+    return memberService.updateMemberPoint(member, id)
+  }
+
 
 }

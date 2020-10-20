@@ -9,19 +9,19 @@
         <v-col sm="8">
           <v-flex class="white--text">
             <h2 class="mb-6">
-              <span>직접 탐험하여 찾고<br /></span>
-              <span>포인트를 얻어보세요.</span>
+              <div class="mb-2">직접 탐험하여 찾고<br /></div>
+              <div>포인트를 얻어보세요.</div>
             </h2>
             <h4 class="mb-8">
-              <span>쌓은 포인트로 다양한 <br /></span>
-              <span>기프티콘, 상품권 등을 얻을 기회!</span>
+              <div class="mb-2">쌓은 포인트로 다양한 <br /></div>
+              <div class="mb-8">기프티콘, 상품권 등을 얻을 기회!</div>
             </h4>
             <v-btn
               depressed
               width="150"
               class="white--text text-decoration-none"
               color="orange"
-              to="/travel"
+              to="/travels/free"
               ><b>시작하기</b>
             </v-btn>
           </v-flex>

@@ -1,7 +1,18 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col lg="5" md="12" class="pa-16">
+      <v-snackbar
+        color="orange"
+        centered
+        v-model="snackbar"
+        :timeout="3000"
+        light
+      >
+        <div class="text-center">
+          <b>{{ errorMessage }}</b>
+        </div>
+      </v-snackbar>
+      <v-col lg="5" md="8" class="pa-16">
         <h2 class="text-center mb-8"><b>로그인</b></h2>
         <div class="text-center">
           <v-btn class="mb-3" color="blue darken-3" large block dark>
@@ -28,9 +39,9 @@
             required
           ></v-text-field>
           <div class="text-right">
-            <router-link to="/api/auth/reset" tag="a"
-              >비밀번호 재설정
-            </router-link>
+            <v-btn color="orange" to="/api/auth/reset" text>
+              비밀번호 재설정
+            </v-btn>
           </div>
           <v-text-field
             v-model="password"
@@ -70,6 +81,8 @@ export default {
   data: () => ({
     email: "",
     password: "",
+    snackbar: false,
+    errorMessage: "",
     valid: true,
     show: false,
     emailRules: [
@@ -90,7 +103,11 @@ export default {
         .then(() => {
           this.$router.push("/");
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+          this.snackbar = true;
+          this.errorMessage = this.$store.state.errorMessage;
+          console.log(error);
+        });
     },
   },
 };

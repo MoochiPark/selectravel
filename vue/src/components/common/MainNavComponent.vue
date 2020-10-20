@@ -13,8 +13,9 @@
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto" v-if="isLoggedIn">
         <b-nav-item to="/profile"
-          ><b>{{ currentMemberName }}</b></b-nav-item
+          ><b>{{ currentMemberName }}님 환영합니다.</b></b-nav-item
         >
+        <b-nav-item to="/gifticons"><b>교환소</b></b-nav-item>
         <b-nav-item @click="logout"><b>로그아웃</b></b-nav-item>
       </b-navbar-nav>
     </b-collapse>

@@ -1,6 +1,17 @@
 <template>
   <v-container>
     <v-row justify="center">
+      <v-snackbar
+        color="orange"
+        centered
+        v-model="snackbar"
+        :timeout="3000"
+        light
+      >
+        <div class="text-center">
+          <b>{{ errorMessage }}</b>
+        </div>
+      </v-snackbar>
       <v-col lg="5" md="12" class="pa-16">
         <h2 class="text-center mb-8"><b>계정 만들기</b></h2>
         <div class="text-center">
@@ -48,11 +59,11 @@
             outlined
           ></v-text-field>
           <v-text-field
-            v-model="password"
+            v-model="passwordConfirm"
             :rules="passwordRules"
             :type="show ? 'text' : 'password'"
             @click:append="show = !show"
-            label="비밀번호확인"
+            label="비밀번호 확인"
             dense
             outlined
           ></v-text-field>
@@ -84,24 +95,49 @@ export default {
   data: () => ({
     show: false,
     valid: true,
+    snackbar: false,
+    errorMessage: "",
+    name: "",
     email: "",
+    password: "",
+    passwordConfirm: "",
+    nameRules: [
+      v => !!v || "이름을 반드시 입력해주세요",
+      v => v.length >= 2 || "최소 2 글자 이상 입력해주세요.",
+    ],
     emailRules: [
       v => !!v || "이메일을 반드시 입력해주세요",
       v => /.+@.+\..+/.test(v) || "이메일 형식에 맞춰서 입력해주세요",
     ],
-    password: "",
     passwordRules: [
       v => !!v || "비밀번호를 반드시 입력해주세요",
       v => v.length >= 7 || "최소 7 글자 이상 입력해주세요.",
     ],
   }),
-  // methods: {
-  //   async login() {
-  //     const data = {
-  //       email: this.email,
-  //       password: this.password,
-  //     };
-  //   },
+
+  computed: {
+    confirmRules(v) {
+      return v === this.passwordConfirm || "두 비밀번호가 일치하지 않습니다.";
+    },
+  },
+
+  methods: {
+    signUp() {
+      let member = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+      };
+      this.$store
+        .dispatch("signUp", member)
+        .then(() => this.$router.push("/"))
+        .catch(error => {
+          this.snackbar = true;
+          this.errorMessage = this.$store.state.errorMessage;
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 

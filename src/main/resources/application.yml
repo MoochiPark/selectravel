@@ -3,6 +3,10 @@ server:
   port: 8080
 
 spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5432/capstone_backend?characterEncoding=utf8
     driver-class-name: org.postgresql.Driver
