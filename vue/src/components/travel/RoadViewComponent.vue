@@ -84,7 +84,7 @@
         <v-card>
           <v-card-title class="headline">탐험 종료!</v-card-title>
           <v-card-text
-            >{{ 100 * this.getValidItems.filter(i => i === true).length }}
+            >{{ 100 * this.matchedCount }}
             포인트가 적립되었습니다.
           </v-card-text>
           <v-card-actions>
@@ -134,7 +134,7 @@ export default {
       errorMessage: "",
       dialog: false,
       isComplete: false,
-      point: 0,
+      matchedCount: 0,
     };
   },
   watch: {
@@ -293,10 +293,10 @@ export default {
       vm.$forceUpdate();
     },
     submit() {
-      let matchedCount = this.validItems.filter(i => i === true).length;
+      this.matchedCount = this.validItems.filter(i => i === true).length;
       let id = this.member.id;
       this.$store
-        .dispatch("submit", { count: matchedCount, id: id })
+        .dispatch("submit", { count: this.matchedCount, id: id })
         .then(response => {
           setTimeout(() => {
             this.$router.push("/");
